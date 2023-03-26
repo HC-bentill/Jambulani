@@ -1,0 +1,1 @@
+export const base_url = 'https://camiestas-futbol.effectstudios.co/api/v1'
