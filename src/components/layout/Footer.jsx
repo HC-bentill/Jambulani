@@ -68,7 +68,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="px-[34px] flex-col md:flex items-center justify-between py-2 bg-[#f5f5f6]">
+      <div className="px-[34px] grid grid-cols-1 md:flex items-center justify-between py-2 bg-[#f5f5f6]">
         <p className="text-[12px] text-[#111112]">© 2021 Jambulani  •  All rights reserved</p>
         <img src={Images.partners} alt="partners"/>
       </div>
