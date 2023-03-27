@@ -8,7 +8,7 @@ const PageLayout = () => {
   return (
     <div>
       <Header />
-      <div className="px-[34px]">
+      <div className="md:px-[34px] px-1">
         <Outlet />
       </div>
       <Footer />

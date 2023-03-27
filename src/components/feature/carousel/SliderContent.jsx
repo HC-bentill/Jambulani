@@ -3,12 +3,12 @@ import React from "react";
 function SliderContent({activeIndex, sliderImage}) {
   return (
     <section>
-      {sliderImage.map((slide, index) => (
+      {sliderImage?.map((slide, index) => (
         <div key={index} className={index === activeIndex ? "slides active" : "inactive"}>
-          <img className="slide-image" src={slide.urls} alt="" />
+          <img className="slide-image" src={slide?.image} alt="" />
 
           <div className="border-[1px] border-white slide-text flex items-center">
-            <p className="text-[12px] px-4 py-2 bg-[#00000082]">{slide.description}</p>
+            <p className="text-[12px] px-4 py-2 bg-[#000000b6]">{slide?.btn_text ?? 'Shop Now'}</p>
             <div className="bg-white p-3">
               <svg width="14" height="15" viewBox="0 0 14 15" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path

@@ -1,10 +1,5 @@
-import { base_url } from "../utils";
+import { apiAxios, base_url } from "../utils";
 
-export const GetPopularProducts = async () => {
-   const res = await fetch(base_url + '/popular-products');
-
-   const data = await res.json()
-
-   return data;
-}
+export const GetPopularProducts = async () => await apiAxios().get('/popular-products');
+export const GetSingleProduct = async (slug) => await apiAxios().get(`/product-single/${slug}`);
 

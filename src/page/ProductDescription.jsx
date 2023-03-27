@@ -1,20 +1,68 @@
-import React, {useState} from "react";
-import {Link} from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {Link, useParams} from "react-router-dom";
 import productImage from "../assets/images/product-medium.jpg";
+import {GetSingleProduct} from "../services/product.service";
 
 const ProductDescription = () => {
-  const [selectedImage, setSelectedImage] = useState(productImage); //default product image will be loaded here
+  const [selectedImage, setSelectedImage] = useState(); //default product image will be loaded here
+  const [productImages, setProductImages] = useState();
+  const [selectedProduct, setSelectedProduct] = useState();
+  const [imageIndex, setImageIndex] = useState();
+
+  const {slug} = useParams();
 
   const handleImageSelection = (image) => {
     setSelectedImage(image);
   };
 
+  const getProductDetails = () => {
+    GetSingleProduct(slug)
+      .then((res) => {
+        if (res) {
+          setSelectedProduct(res?.data?.product);
+          setTimeout(() => {
+            document.getElementById("desc").innerHTML = res?.data?.product?.description;
+          }, 100);
+          const productImages = res?.data?.product?.gallery?.reduce((accumulator, element) => {
+            if (!accumulator?.includes(element?.image)) {
+              accumulator?.push(element?.image);
+            }
+            return accumulator;
+          }, []);
+
+          setSelectedImage(productImages[0]);
+          setImageIndex(0);
+          setProductImages(productImages);
+        }
+      })
+      .catch((err) => console.log("err", err));
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    getProductDetails();
+  }, [slug]);
+
+  const handlePrev = () => {
+    // if (!imageIndex === 0) {
+    const position = productImages[imageIndex - 1];
+    setSelectedImage(position);
+    setImageIndex(imageIndex - 1);
+    // }
+  };
+
+  const handleNext = () => {
+    const position = productImages[imageIndex + 1];
+    setSelectedImage(position);
+    setImageIndex(imageIndex + 1);
+  };
+
   return (
     <>
-      <div className="px-[120px] py-6 pb-32 max-w-7xl w-full mx-auto ">
+      <div className="md:px-[120px] py-6 pb-32 max-w-7xl w-full mx-auto px-2">
         <div>
           <nav className="w-full rounded-md">
-            <ol className="list-reset flex text-[10px]">
+            <ol className="list-reset flex text-[9px] md:text-[10px]">
               <li className="text-[#1256DB] hover:underline">
                 <Link to="/" className="base-light-color">
                   Home
@@ -23,11 +71,11 @@ const ProductDescription = () => {
               <li>
                 <span className="mx-2 base-color">{">"}</span>
               </li>
-              <li className="text-[#1256DB] hover:underline">England — Premier League</li>
+              <li className="text-[#1256DB] hover:underline">{selectedProduct?.categories[0]?.title ?? "category"}</li>
               <li>
                 <span className="mx-2 base-color">{">"}</span>
               </li>
-              <li className="text-gray-400">Manchester United 21-22 Home Shirt</li>
+              <li className="text-gray-400">{slug}</li>
             </ol>
           </nav>
         </div>
@@ -36,45 +84,51 @@ const ProductDescription = () => {
             <div>
               <img alt="image" src={selectedImage} width={480} height={450} className="block object-contain" />
               <div className="flex justify-end w-full ml-auto relative bottom-[50px] right-[50px]">
-                <button className="border-gray-200 border-[1px] p-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 6 10" size="8">
-                    <path d="M0.359054 4.64463C0.161356 4.8403 0.161356 5.1597 0.359054 5.35537L4.39827 9.35316C4.71399 9.66564 5.25 9.442 5.25 8.99779L5.25 1.00221C5.25 0.557998 4.71399 0.334357 4.39827 0.646838L0.359054 4.64463Z" fill="white"></path>
-                  </svg>
-                </button>
-                <button className="ml-2 border-gray-200 border-[1px] p-3">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 6 10" size="8">
-                    <path d="M5.64095 4.64463C5.83864 4.8403 5.83864 5.1597 5.64095 5.35537L1.60173 9.35316C1.28601 9.66564 0.75 9.442 0.75 8.99779L0.75 1.00221C0.75 0.557998 1.28601 0.334357 1.60173 0.646838L5.64095 4.64463Z" fill="white"></path>
-                  </svg>
-                </button>
+                {imageIndex === 0 ? (
+                  <></>
+                ) : (
+                  <button className="border-gray-200 border-[1px] p-3" onClick={() => handlePrev()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 6 10" size="8">
+                      <path d="M0.359054 4.64463C0.161356 4.8403 0.161356 5.1597 0.359054 5.35537L4.39827 9.35316C4.71399 9.66564 5.25 9.442 5.25 8.99779L5.25 1.00221C5.25 0.557998 4.71399 0.334357 4.39827 0.646838L0.359054 4.64463Z" fill="white"></path>
+                    </svg>
+                  </button>
+                )}
+                {imageIndex + 1 === productImages?.length ? (
+                  <></>
+                ) : (
+                  <button className="ml-2 border-gray-200 border-[1px] p-3" onClick={() => handleNext()}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 6 10" size="8">
+                      <path d="M5.64095 4.64463C5.83864 4.8403 5.83864 5.1597 5.64095 5.35537L1.60173 9.35316C1.28601 9.66564 0.75 9.442 0.75 8.99779L0.75 1.00221C0.75 0.557998 1.28601 0.334357 1.60173 0.646838L5.64095 4.64463Z" fill="white"></path>
+                    </svg>
+                  </button>
+                )}
               </div>
             </div>
-            <div className="flex mt-[-22px]">
-              {Array(6)
-                .fill()
-                .map((item) => (
-                  // <img alt="image" onClick={() => handleImageSelection(item)} key={index} src={productImage} width={70} height={70} className={`${selectedImage === item ? "" : ""} block cursor-pointer mb-3 rounded-md`} />
-                  <img alt="image" src={productImage} width={70} height={70} className="mr-3 opacity-50" />
-                ))}
+            <div className="flex">
+              {selectedProduct?.gallery?.map((item, index) => (
+                <img alt="image" onClick={() => handleImageSelection(item?.image)} key={index} src={item?.image} width={70} height={70} className={`${selectedImage === item?.image ? "opacity-100" : ""} block cursor-pointer mr-3 opacity-50`} />
+                // <img alt="image" src={productImage} width={70} height={70} className="mr-3 opacity-50" />
+              ))}
             </div>
           </div>
-          <div>
-            <p className="text-xl font-bold">Manchester United 21-22 Home Shirt</p>
+          <div className="md:pt-0 pt-6">
+            <p className="text-xl font-bold">{selectedProduct?.product_name}</p>
             <div className="mt-2 flex items-center">
-              <small className="font-bold text-[30px] mr-3">€30.00</small>
+              <small className="font-bold text-[30px] mr-3">€{selectedProduct?.variants[0]?.price}</small>
               <small className="text-[#EE503E] line-through ml-1 text-[14px] mr-4">€89.95</small>
               <div className="bg-[#23C353] text-white text-[12px] p-1 font-semibold px-3">Save 67%</div>
-              <button className="flex items-center ml-20 border-gray-300 text-gray-400 border-[1px] px-3">
+              <button className="flex items-center md:ml-20 ml-5 border-gray-300 text-gray-400 border-[1px] py-3 md:py-0 px-3">
                 <svg className="" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M5.46642 9.83883L5.4657 9.83817C3.91064 8.42933 2.66051 7.29555 1.79313 6.23606C0.931485 5.18357 0.5 4.26558 0.5 3.297C0.5 1.72725 1.72771 0.5 3.3 0.5C4.19278 0.5 5.05732 0.917668 5.61947 1.5772L6 2.02366L6.38053 1.5772C6.94268 0.917668 7.80722 0.5 8.7 0.5C10.2723 0.5 11.5 1.72725 11.5 3.297C11.5 4.26559 11.0685 5.1836 10.2068 6.23694C9.33938 7.29715 8.08942 8.43225 6.53453 9.84396C6.53432 9.84415 6.53411 9.84434 6.5339 9.84453L6.00128 10.3253L5.46642 9.83883Z"
                     stroke="#393A38"
                   />
                 </svg>
-                <p className="p-2 text-[11px]">Add to Favorites</p>
+                <p className="p-2 text-[11px] hidden md:block">Add to Favorites</p>
               </button>
             </div>
-            <p className="text-[#111112] text-[12px] mt-6">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque euismod lacinia aliquam. Morbi est nis, at lacus. Donec ornare, dui vel facilisis luctus, metus mi ttitor erat sapien scelerisque nunc. Pellentesque ornare elit tellus... <b>Read More</b>
+            <p className="text-[#111112] text-[12px] mt-6" id="desc">
+              {selectedProduct?.description}
             </p>
 
             <div className="flex items-center mt-10">

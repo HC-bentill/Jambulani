@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import SliderContent from "./SliderContent";
 import Dots from "./Dots";
-import Arrows from "./Arrows";
-import sliderImage from "./sliderImage";
 import "./carousel.css";
 
-const len = sliderImage.length - 1;
-
-function Carousel(props) {
+function Carousel({sliderImage}) {
   const [activeIndex, setActiveIndex] = useState(0);
+
+  const len = sliderImage?.length - 1;
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,11 +18,7 @@ function Carousel(props) {
   return (
     <div className="slider-container">
       <SliderContent activeIndex={activeIndex} sliderImage={sliderImage} />
-      <Dots
-        activeIndex={activeIndex}
-        sliderImage={sliderImage}
-        onclick={(activeIndex) => setActiveIndex(activeIndex)}
-      />
+      <Dots activeIndex={activeIndex} sliderImage={sliderImage} onclick={(activeIndex) => setActiveIndex(activeIndex)} />
     </div>
   );
 }
