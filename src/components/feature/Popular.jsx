@@ -80,7 +80,7 @@ const Popular = () => {
       </div>
 
       <div className="pt-8 pb-10  md:px-0 px-2">
-        <div className="md:px-8 px-3 slider-container">
+        <div className="md:px-8 px-1 slider-container">
           <Slider {...settings}>
             {popularProducts &&
               popularProducts.map((item, index) => (

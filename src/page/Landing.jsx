@@ -27,15 +27,15 @@ const Landing = () => {
       <CountryLeagues />
       <OtherCollections />
       <section className="py-10 pb-14" >
-        <div className="grid grid-cols-2 gap-6 text-white">
-          <div className="personalization  px-12 pt-52 pb-8">
+        <div className="grid md:grid-cols-2 grid-cols-1 gap-6 text-white">
+          <div className="personalization px-6 md:px-12 pt-52 pb-8">
             <p className="uppercase text-lg font-bold mb-6">Personalization</p>
             <p className="font-light text-xs">Put a custom print on the football shirt of your choice with our Personalization service.</p>
             <p className="font-light text-xs mt-3">
               Tell us what name, what number and we put it. <b className="font-bold">FREE!!!</b>
             </p>
           </div>
-          <div className="social-network px-12 pt-52 pb-8">
+          <div className="social-network px-6 md:px-12 pt-52 pb-8">
             <p className="uppercase text-lg font-bold mb-6">Social Networks</p>
             <p className="font-light text-xs">Put a custom print on the football shirt of your choice with our Personalization service.</p>
             <div className="flex items-center mt-3">

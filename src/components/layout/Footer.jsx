@@ -39,7 +39,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
-        <div className="pl-12">
+        <div className="md:pl-12">
           <p className="text-[12px] text-[#111112] font-bold mb-5 capitalize">Follow Us</p>
           <div className="flex items-center mt-3">
             <div className="bg-black py-2 px-3 mr-2">
@@ -68,7 +68,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="px-[34px] flex items-center justify-between py-2 bg-[#f5f5f6]">
+      <div className="px-[34px] flex-col md:flex items-center justify-between py-2 bg-[#f5f5f6]">
         <p className="text-[12px] text-[#111112]">© 2021 Jambulani  •  All rights reserved</p>
         <img src={Images.partners} alt="partners"/>
       </div>

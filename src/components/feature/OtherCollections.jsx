@@ -39,7 +39,7 @@ const OtherCollections = () => {
       <div className="flex items-start mt-10 mb-3">
         <h2 className="mr-6 uppercase text-2xl font-bold">Other collections</h2>
       </div>
-      <div className="pt-8 pb-10 grid grid-cols-3 gap-6 md:px-0 px-2">
+      <div className="pt-8 pb-10 grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-6 md:px-0 px-2">
         {images?.map((item, index) => (
             <div key={index} className="bg-no-repeat bg-cover pt-40" style={{backgroundImage: `url(${item?.image})`}}>
               {/* <img src={Kids} alt="country league image" /> */}

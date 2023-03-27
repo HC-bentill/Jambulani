@@ -23,7 +23,7 @@ const CountryLeagues = () => {
       <div className="flex items-start mt-10 mb-3">
         <h2 className="mr-6 uppercase text-2xl font-bold">Country Leagues</h2>
       </div>
-      <div className="pt-8 pb-10 grid grid-cols-5 gap-5 md:px-0 px-2">
+      <div className="pt-8 pb-10 grid md:grid-cols-5 grid-cols-2 gap-3 md:gap-5 md:px-0 px-2">
         {categories?.map((category, index) => (
             <div key={index}>
               <img src={category?.image ? category?.image : country} alt="country league image" />

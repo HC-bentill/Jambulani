@@ -59,10 +59,10 @@ const ProductDescription = () => {
 
   return (
     <>
-      <div className="px-[120px] py-6 pb-32 max-w-7xl w-full mx-auto ">
+      <div className="md:px-[120px] py-6 pb-32 max-w-7xl w-full mx-auto px-2">
         <div>
           <nav className="w-full rounded-md">
-            <ol className="list-reset flex text-[10px]">
+            <ol className="list-reset flex text-[9px] md:text-[10px]">
               <li className="text-[#1256DB] hover:underline">
                 <Link to="/" className="base-light-color">
                   Home
@@ -71,7 +71,7 @@ const ProductDescription = () => {
               <li>
                 <span className="mx-2 base-color">{">"}</span>
               </li>
-              <li className="text-[#1256DB] hover:underline">{selectedProduct?.categories[0]?.title}</li>
+              <li className="text-[#1256DB] hover:underline">{selectedProduct?.categories[0]?.title ?? "category"}</li>
               <li>
                 <span className="mx-2 base-color">{">"}</span>
               </li>
@@ -93,7 +93,7 @@ const ProductDescription = () => {
                     </svg>
                   </button>
                 )}
-                {imageIndex + 1 === productImages.length ? (
+                {imageIndex + 1 === productImages?.length ? (
                   <></>
                 ) : (
                   <button className="ml-2 border-gray-200 border-[1px] p-3" onClick={() => handleNext()}>
@@ -104,27 +104,27 @@ const ProductDescription = () => {
                 )}
               </div>
             </div>
-            <div className="flex mt-[-22px]">
+            <div className="flex">
               {selectedProduct?.gallery?.map((item, index) => (
                 <img alt="image" onClick={() => handleImageSelection(item?.image)} key={index} src={item?.image} width={70} height={70} className={`${selectedImage === item?.image ? "opacity-100" : ""} block cursor-pointer mr-3 opacity-50`} />
                 // <img alt="image" src={productImage} width={70} height={70} className="mr-3 opacity-50" />
               ))}
             </div>
           </div>
-          <div>
+          <div className="md:pt-0 pt-6">
             <p className="text-xl font-bold">{selectedProduct?.product_name}</p>
             <div className="mt-2 flex items-center">
               <small className="font-bold text-[30px] mr-3">€{selectedProduct?.variants[0]?.price}</small>
               <small className="text-[#EE503E] line-through ml-1 text-[14px] mr-4">€89.95</small>
               <div className="bg-[#23C353] text-white text-[12px] p-1 font-semibold px-3">Save 67%</div>
-              <button className="flex items-center ml-20 border-gray-300 text-gray-400 border-[1px] px-3">
+              <button className="flex items-center md:ml-20 ml-5 border-gray-300 text-gray-400 border-[1px] py-3 md:py-0 px-3">
                 <svg className="" width="12" height="11" viewBox="0 0 12 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
                     d="M5.46642 9.83883L5.4657 9.83817C3.91064 8.42933 2.66051 7.29555 1.79313 6.23606C0.931485 5.18357 0.5 4.26558 0.5 3.297C0.5 1.72725 1.72771 0.5 3.3 0.5C4.19278 0.5 5.05732 0.917668 5.61947 1.5772L6 2.02366L6.38053 1.5772C6.94268 0.917668 7.80722 0.5 8.7 0.5C10.2723 0.5 11.5 1.72725 11.5 3.297C11.5 4.26559 11.0685 5.1836 10.2068 6.23694C9.33938 7.29715 8.08942 8.43225 6.53453 9.84396C6.53432 9.84415 6.53411 9.84434 6.5339 9.84453L6.00128 10.3253L5.46642 9.83883Z"
                     stroke="#393A38"
                   />
                 </svg>
-                <p className="p-2 text-[11px]">Add to Favorites</p>
+                <p className="p-2 text-[11px] hidden md:block">Add to Favorites</p>
               </button>
             </div>
             <p className="text-[#111112] text-[12px] mt-6" id="desc">

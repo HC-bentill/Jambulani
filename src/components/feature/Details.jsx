@@ -44,7 +44,7 @@ const Details = () => {
   ];
 
   return (
-    <div className="pt-4 grid grid-cols-4 gap-3">
+    <div className="pt-4 grid md:grid-cols-4 grid-cols-2 md:px-0 px-2 gap-3">
       {heroDetails?.map((item, index) => (
         <div key={index} className="overflow-hidden bg-[#fdf9e0] p-5 pb-3">
           <div className="skewed bg-yellow p-2 w-fit mb-4">{item?.icon}</div>
