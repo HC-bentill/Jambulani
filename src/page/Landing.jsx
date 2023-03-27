@@ -1,14 +1,27 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Carousel from "../components/feature/carousel/Carousel";
 import CountryLeagues from "../components/feature/CountryLeagues";
 import Details from "../components/feature/Details";
 import OtherCollections from "../components/feature/OtherCollections";
 import Popular from "../components/feature/Popular";
+import { GetBanners } from "../services/banner.service";
 
 const Landing = () => {
+  const [sliderImage, setSliderImage] = useState([]);
+
+  useEffect(() => {
+    GetBanners()
+      .then((res) => {
+        if (res) {
+          setSliderImage(res?.data?.banners?.data);
+        }
+      })
+      .catch((err) => console.log("err", err));
+  }, [])
+
   return (
     <>
-      <Carousel />
+      <Carousel sliderImage={sliderImage}/>
       <Details />
       <Popular />
       <CountryLeagues />

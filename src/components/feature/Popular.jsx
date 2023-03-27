@@ -1,8 +1,27 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
+import { useNavigate } from "react-router-dom";
 import Slider from "react-slick";
+import {GetPopularProducts} from "../../services/product.service";
 import ProductCard from "./ProductCard";
 
 const Popular = () => {
+  const [popularProducts, setPopularProducts] = useState([]);
+  const navigate = useNavigate();
+  
+  const fetchProducts = () => {
+    GetPopularProducts()
+      .then((res) => {
+        if (res) {
+          setPopularProducts(res?.data?.products?.data);
+        }
+      })
+      .catch((err) => console.log("err", err));
+  };
+
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const NextArrow = (props) => {
     const {className, style, onClick} = props;
     return (
@@ -24,7 +43,6 @@ const Popular = () => {
     infinite: true,
     speed: 500,
     slidesToShow: 5,
-    infinite: true,
     autoplay: true,
     slidesToScroll: 1,
     autoplaySpeed: 2000,
@@ -64,11 +82,12 @@ const Popular = () => {
       <div className="pt-8 pb-10  md:px-0 px-2">
         <div className="md:px-8 px-3 slider-container">
           <Slider {...settings}>
-            {Array(6).fill().map((_) => (
-              <div>
-                <ProductCard />
-              </div>
-            ))}
+            {popularProducts &&
+              popularProducts.map((item, index) => (
+                <div key={index} onClick={() => navigate(`/product-description/${item?.slug}`)}>
+                  <ProductCard product={item} />
+                </div>
+              ))}
           </Slider>
         </div>
       </div>

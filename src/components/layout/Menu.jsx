@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 
 const Menu = () => {
@@ -45,7 +46,7 @@ const Menu = () => {
             </div>
           </div>
           <div className="flex items-center font-medium text-[12px] text-gray-700 pl-9 pt-1 cursor-pointer border-b-slate-100 border-b-[0.5px]">
-            <p className="mr-14 text-black font-bold border-b-[#F9DC38] border-b-[2px] py-1">Home</p>
+            <Link to='/' className="mr-14 text-black font-bold border-b-[#F9DC38] border-b-[2px] py-1">Home</Link>
             <div className="flex items-center mr-14 hover:font-bold hover:text-black">
                 <p>T-Shirts</p>
                 <svg className="ml-2" width="6" height="4" viewBox="0 0 6 4" fill="none" xmlns="http://www.w3.org/2000/svg">
